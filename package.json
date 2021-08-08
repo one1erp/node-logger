@@ -1,5 +1,5 @@
 {
-  "name": "logger",
+  "name": "node-logger",
   "version": "1.0.0",
   "description": "Logger for services, based on winston and ELK format",
   "main": "index.js",
