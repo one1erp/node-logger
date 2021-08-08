@@ -1,0 +1,26 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "description": "Logger for services, based on winston and ELK format",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/one1erp/node-logger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/one1erp/node-logger/issues"
+  },
+  "homepage": "https://github.com/one1erp/node-logger#readme",
+  "dependencies": {
+    "@elastic/ecs-winston-format": "^1.1.0",
+    "add2zip": "github:one1erp/add2zip",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
+  }
+}
