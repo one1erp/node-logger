@@ -19,7 +19,6 @@
   "homepage": "https://github.com/one1erp/node-logger#readme",
   "dependencies": {
     "@elastic/ecs-winston-format": "^1.1.0",
-    "add2zip": "github:one1erp/add2zip",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5"
   }

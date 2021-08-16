@@ -1,6 +1,5 @@
 const winston = require('winston');
 require('winston-daily-rotate-file');
-const addToZip = require('add2zip');
 const ecsFormat = require('@elastic/ecs-winston-format')
 
 const logger = (options) => {
@@ -12,14 +11,11 @@ const logger = (options) => {
     var transport = new winston.transports.DailyRotateFile({
       filename: logFileName + '-%DATE%.log',
       datePattern: 'DD.MM.YYYY',
-      maxFiles: (options.days)? options.days + "d" : null,
+      maxFiles: (options.days)? options.days + "d" : (options.maxFiles)? options.maxFiles : null,
+      zippedArchive: options.zip,
+      maxSize: (options.maxSize)? options.maxSize : null
     });
     
-    if (options.zip) {
-      transport.on('rotate', function(oldFileName, newFileName) {
-        addToZip(logFileName + ".zip", oldFileName);
-      });
-    }
     
     let format = winston.format.printf((info) =>{
       let {timestamp, level, message, ...rest} = info;
@@ -61,7 +57,5 @@ const logger = (options) => {
 
     return winstonLogger;
 }
-
-
 
 module.exports = logger

@@ -2,8 +2,12 @@ const nodeLogger = require('./index.js');
 
 const logger = nodeLogger({
     logFile: "logs\\test.log",
-    days: 1,
-    zip: true
+    maxFiles: 3,
+    zip: true,
+    maxSize: "1k"
 });
 
-logger.info("Testing logger");
+setInterval(() => {
+    logger.info("Testing logger");
+}, 1000*5)
+
