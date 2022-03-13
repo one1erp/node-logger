@@ -1,6 +1,6 @@
 {
   "name": "node-logger",
-  "version": "1.0.0",
+  "version": "1.0.0-rc",
   "description": "Logger for services, based on winston and ELK format",
   "main": "index.js",
   "scripts": {
