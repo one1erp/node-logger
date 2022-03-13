@@ -1,6 +1,7 @@
 const winston = require('winston');
 require('winston-daily-rotate-file');
 const ecsFormat = require('@elastic/ecs-winston-format')
+const date = require('date-and-time');
 
 const logger = (options) => {
     let logFileName = options.logFile;
@@ -25,7 +26,7 @@ const logger = (options) => {
         message,
         ecs: {version:"1.6.0"},
         ...rest,
-      });
+      }, circularReplacer());
     });
 
     let productionLogLever = (options.productionLogLevel)? options.productionLogLevel : "info";
@@ -35,7 +36,7 @@ const logger = (options) => {
       level: productionLogLever,
       format: winston.format.combine(
         winston.format.timestamp({
-          format: 'DD/MM/YYYY HH:mm:ss'
+          format: localDateTimeFormat
         }),
         winston.format.json({
           stable: true
@@ -57,5 +58,46 @@ const logger = (options) => {
 
     return winstonLogger;
 }
+
+/**
+ * Set date time format to local
+ * @returns String
+ */
+const localDateTimeFormat = () => {
+  let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let now = new Date()
+  return date.format(now, 'DD/MM/YYYY HH:mm:ss');  
+}
+
+/**
+ * Check for circular reference and replace it with static error string
+ * @returns any
+ */
+const circularReplacer = () => {
+  
+  // Creating new WeakSet to keep 
+  // track of previously seen objects
+  const seen = new WeakSet();
+    
+  return (key, value) => {
+
+      // If type of value is an 
+      // object or value is null
+      if (typeof(value) === "object" 
+                 && value !== null) {
+        
+      // If it has been seen before
+      if (seen.has(value)) {
+               return "ERROR_CIRCULAR_REFERENCE";
+           }
+             
+           // Add current value to the set
+           seen.add(value);
+     }
+       
+     // return the value
+     return value;
+ };
+};
 
 module.exports = logger
