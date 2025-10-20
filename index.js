@@ -55,6 +55,13 @@ const logger = (options) => {
         format: format,
       }));
     }
+    else { // Add console log in production 
+      winstonLogger.add(new winston.transports.Console({
+        level: productionLogLever,
+        format: format,
+      }));
+
+    }
 
     return winstonLogger;
 }
